@@ -1,0 +1,13 @@
+# Config File
+/Conf/config.php
+
+# Cache & Temp Files
+/Runtime/*/*
+~*
+*.bak
+*.cmp
+*.old
+*.tmp
+
+# Exclude Fix
+!index.html
