@@ -8,5 +8,8 @@ return array(
 	'DB_PWD'    => '', // 密码
 	'DB_PORT'   => 3306, // 端口
 	'DB_PREFIX' => 'se_', // 数据库表前缀
+	// 全局布局
+	'LAYOUT_ON'=>true,
+	'LAYOUT_NAME'=>'layout',
 );
 ?>

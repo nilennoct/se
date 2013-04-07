@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{$TITLE}</title>
+	<link rel="stylesheet" href="../Public/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../Public/css/bootstrap-responsive.min.css">
+	<link rel="stylesheet" href="../Public/css/common.css">
+	<script src="../Public/js/jquery-1.9.1.min.js"></script>
+	<script src="../Public/js/bootstrap.min.js"></script>
+	<script src="../Public/js/common.js"></script>
+</head>
+<body>
+	<header id="header">
+		<nav id="nav" class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<a class="brand" href="#">Online Payment System</a>
+					<ul class="nav">
+						<li class="divider-vertical"></li>
+						<li><a href="#"><i class="icon-home"></i> Home</a></li>
+						<li><a href="#"><i class="icon-user"></i> User</a></li>
+						<!-- Add your module here, wrapped with <li><a href=""></a></li> -->
+					</ul>
+
+					<ul id="userPanel" class="nav pull-right">
+					<if condition="!isset($_SESSION[uid])">
+						<li><a href="javascript:showRegisterModal();">Register</a></li>
+						<li><a href="javascript:showLoginModal();">Login</a></li>
+					<else />
+						<li><a href="User/logout"><i class="icon-off"></i> Logout</a></li>
+						<li class="divider-vertical"></li>
+						<li><a href="#"><img id="avatar" src="{$_SESSION[avatar]}?s=20" alt="{$_SESSION[username]}">{$_SESSION[username]}</a></li>
+					</if>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+	<div id="container" class="container">
+	{__CONTENT__}
+	</div>
+
+<if condition="!isset($_SESSION[uid])">
+	<div id="loginModal" class="modal small hide in">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3>Login</h3>
+		</div>
+		<div class="modal-body">
+			<form class="form">
+				<div class="control-group">
+					<label class="control-label" for="nameLogin">Username</label>
+					<div class="controls">
+						<input type="text" name="name" id="nameLogin" placeholder="Username">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="pwdLogin">Password</label>
+					<div class="controls">
+						<input type="password" name="pwd" id="pwdLogin" placeholder="Password">
+					</div>
+				</div>
+			</form>
+
+			<div id="infoLogin" class="alert hide"></div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+			<button class="btn btn-primary" onclick="postLogin();">Login</button>
+		</div>
+	</div>
+
+	<div id="registerModal" class="modal small hide in">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3>Register</h3>
+		</div>
+		<div class="modal-body">
+			<form class="form">
+				<div class="control-group">
+					<label class="control-label" for="nameRegister">Username</label>
+					<div class="controls">
+						<input type="text" name="name" id="nameRegister" placeholder="Username(4-20)" required />
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="pwdRegister">Password</label>
+					<div class="controls input-append">
+						<input type="password" name="pwd" id="pwdRegister" placeholder="Password" required />
+						<span id="togglePwVisibility" onclick="javascript:togglePwVisibility();" class="add-on"><i class="icon-eye-close"></i></span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="emailRegister">Email</label>
+					<div class="controls">
+						<input type="email" name="email" id="emailRegister" placeholder="Email" required />
+					</div>
+				</div>
+			</form>
+
+			<div id="infoRegister" class="alert hide"></div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+			<button class="btn btn-primary" onclick="postRegister();">Register</button>
+		</div>
+	</div>
+</if>
+	<footer id="footer"></footer>
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+<div class="hero-unit" style="margin-top:50px;">
+	<h1>Hello, world!</h1>
+	<p>Here is the home page. What shall we place on it?</p>
+	<p>
+		<a id="fool" class="btn btn-primary btn-large">Explore Now</a>
+	</p>
+</div>
+<script>
+	$(function() {
+		$('#fool').popover({
+			'title': "What?",
+			'content': "Register first, please."
+		});
+	})
+</script>
