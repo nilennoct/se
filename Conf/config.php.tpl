@@ -11,5 +11,7 @@ return array(
 	// 全局布局
 	'LAYOUT_ON'=>true,
 	'LAYOUT_NAME'=>'layout',
+	// URL
+	'URL_MODEL'		=> 2,
 );
 ?>

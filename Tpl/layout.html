@@ -10,17 +10,20 @@
 	<script src="../Public/js/jquery-1.9.1.min.js"></script>
 	<script src="../Public/js/bootstrap.min.js"></script>
 	<script src="../Public/js/common.js"></script>
+	<script>
+		var ROOT = '__APP__';
+	</script>
 </head>
 <body>
 	<header id="header">
 		<nav id="nav" class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container">
-					<a class="brand" href="#">Online Payment System</a>
+					<a class="brand" href="javascript:void(0);">Online Payment System</a>
 					<ul class="nav">
 						<li class="divider-vertical"></li>
-						<li><a href="#"><i class="icon-home"></i> Home</a></li>
-						<li><a href="#"><i class="icon-user"></i> User</a></li>
+						<li><a href="__APP__/"><i class="icon-home"></i> Home</a></li>
+						<li><a href="__APP__/User/"><i class="icon-user"></i> User</a></li>
 						<!-- Add your module here, wrapped with <li><a href=""></a></li> -->
 					</ul>
 
@@ -29,9 +32,9 @@
 						<li><a href="javascript:showRegisterModal();">Register</a></li>
 						<li><a href="javascript:showLoginModal();">Login</a></li>
 					<else />
-						<li><a href="User/logout"><i class="icon-off"></i> Logout</a></li>
+						<li><a href="__APP__/User/logout"><i class="icon-off"></i> Logout</a></li>
 						<li class="divider-vertical"></li>
-						<li><a href="#"><img id="avatar" src="{$_SESSION[avatar]}?s=20" alt="{$_SESSION[username]}">{$_SESSION[username]}</a></li>
+						<li><a href="__APP__/User/"><img id="avatar" src="{$_SESSION[avatar]}?s=20" alt="{$_SESSION[username]}" width="40" height="40" />{$_SESSION[username]}</a></li>
 					</if>
 					</ul>
 				</div>
@@ -39,7 +42,7 @@
 		</nav>
 	</header>
 
-	<div id="container" class="container">
+	<div id="container" class="main container">
 	{__CONTENT__}
 	</div>
 
@@ -89,7 +92,7 @@
 				<div class="control-group">
 					<label class="control-label" for="pwdRegister">Password</label>
 					<div class="controls input-append">
-						<input type="password" name="pwd" id="pwdRegister" placeholder="Password" required />
+						<input class="pwd-visible" type="password" name="pwd" id="pwdRegister" placeholder="Password" autocomplete="off" required />
 						<span id="togglePwVisibility" onclick="javascript:togglePwVisibility();" class="add-on"><i class="icon-eye-close"></i></span>
 					</div>
 				</div>

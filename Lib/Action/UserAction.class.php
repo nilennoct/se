@@ -1,5 +1,11 @@
 <?php
 class UserAction extends Action {
+	public function _initialize() {
+		if ( ! session('uid') && ACTION_NAME != 'login' && ACTION_NAME != 'register') {
+			redirect(U('/'));
+		}
+	}
+
 	public function login() {
 		if (IS_POST) {
 			$name = $this->_post('name');
@@ -67,5 +73,37 @@ class UserAction extends Action {
 
 	public function logout() {
 		session('[destroy]');
+		redirect(U('/'));
+	}
+
+	public function index() {
+		$User = D('User');
+		$user = $User->getUser(session('uid'));
+
+		$this->assign('user',$user);
+		$this->assign('TITLE','User Center');
+		$this->display();
+	}
+
+	public function changePwd() {
+		if (IS_POST) {
+			$User = D('User');
+			$user = $User->getUser(session('uid'));
+			if (md5($this->_post('oldpwd')) == $user[PASSWORD]) {
+				if ($User->setPassword($this->_post('pwd'))) {
+					$this->ajaxReturn(0, 'Password changed', 1);
+				}
+				else {
+					$this->ajaxReturn(0, 'Password changing error', 0);
+				}
+			}
+			else {
+				$this->ajaxReturn(0, 'Old password is incorrect', 0);
+			}
+		}
+		else {
+			// 非POST方式提交时报错
+			$this->error('Invalid access');
+		}
 	}
 }

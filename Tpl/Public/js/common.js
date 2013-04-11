@@ -12,14 +12,21 @@ function showRegisterModal() {
 	});
 }
 
+function showChangePwdModal() {
+	$('#changePwdModal').modal({
+		'keyboard': true,
+		'show': true
+	});
+}
+
 function togglePwVisibility() {
-	if ($('#registerModal #togglePwVisibility i').hasClass('icon-eye-open')) {
-		$('#registerModal #pwdRegister').attr('type', 'password');
-		$('#registerModal #togglePwVisibility i').addClass('icon-eye-close').removeClass('icon-eye-open');
+	if ($('#togglePwVisibility i').hasClass('icon-eye-open')) {
+		$('.pwd-visible').attr('type', 'password');
+		$('#togglePwVisibility i').addClass('icon-eye-close').removeClass('icon-eye-open');
 	}
 	else {
-		$('#registerModal #pwdRegister').attr('type', 'text');
-		$('#registerModal #togglePwVisibility i').addClass('icon-eye-open').removeClass('icon-eye-close');
+		$('.pwd-visible').attr('type', 'text');
+		$('#togglePwVisibility i').addClass('icon-eye-open').removeClass('icon-eye-close');
 	}
 }
 
@@ -32,14 +39,14 @@ function postLogin() {
 		return false;
 	}
 	else {
-		$.post('User/login', {'name': name, 'pwd': pwd}, function(json) {
+		$.post(ROOT + '/User/login', {'name': name, 'pwd': pwd}, function(json) {
 			if (!json.status) {
 				$('#infoLogin').text(json.info).addClass('alert-error').slideDown();
 			}
 			else {
 				$('#infoLogin').text(json.info).removeClass('alert-error').addClass('alert-success').slideDown();
 				setTimeout(function() {
-					location.reload();
+					location.href = ROOT + '/User/';
 				}, 1500);
 			}
 		}, 'json');
@@ -60,7 +67,7 @@ function postRegister() {
 			$('#infoRegister').text('Format error').addClass('alert-error').slideDown();
 		}
 		else {
-			$.post('User/register', {'name': name, 'pwd': pwd, 'email': email}, function(json) {
+			$.post(ROOT + '/User/register', {'name': name, 'pwd': pwd, 'email': email}, function(json) {
 				if (!json.status) {
 					$('#infoRegister').text(json.info).addClass('alert-error').slideDown();
 				}
@@ -72,5 +79,28 @@ function postRegister() {
 				}
 			}, 'json');
 		}
+	}
+}
+
+function postChangePwd() {
+	var oldpwd = $('#changePwdModal #oldPwd').val();
+	var pwd = $('#changePwdModal #newPwd').val();
+
+	if (oldpwd == '' || pwd == '') {
+		$('#infoChangePwd').text('Infomation not complete').addClass('alert-error').slideDown();
+		return false;
+	}
+	else {
+		$.post(ROOT + '/User/changePwd', {'oldpwd': oldpwd, 'pwd': pwd}, function(json) {
+			if (!json.status) {
+				$('#infoChangePwd').text(json.info).addClass('alert-error').slideDown();
+			}
+			else {
+				$('#infoChangePwd').text(json.info).removeClass('alert-error').addClass('alert-success').slideDown();
+				setTimeout(function() {
+					$('#changePwdModal').modal('hide');
+				}, 1500);
+			}
+		}, 'json');
 	}
 }

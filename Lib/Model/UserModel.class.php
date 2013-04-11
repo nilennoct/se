@@ -17,4 +17,22 @@ class UserModel extends Model {
 	protected $_auto = array(
 		array('PASSWORD','md5',1,'function')
 	);
+
+	public function getUser($uid = 0) {
+		if ($uid) {
+			return $this->find($uid);
+		}
+		else {
+			return NULL;
+		}
+	}
+
+	public function setPassword($pwd) {
+		if (isset($pwd) && !empty($pwd)) {
+			return $this->where('UID = ' . session('uid'))->setField('PASSWORD',md5($pwd));
+		}
+		else {
+			return false;
+		}
+	}
 }
