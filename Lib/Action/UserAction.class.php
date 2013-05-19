@@ -6,7 +6,47 @@ class UserAction extends Action {
 		}
 	}
 
+	public function index() {
+		$User = D('User');
+		$user = $User->getUser(session('uid'));
+
+		$user[BALANCE] = number_format($user[BALANCE], 2);
+		$user[FREEZE] = number_format($user[FREEZE], 2);
+
+		C('TOKEN_ON',false);
+		$this->assign('user',$user);
+		$this->assign('TITLE','User Center');
+		$this->display();
+	}
+
+	public function transactions() {
+		import('ORG.Util.Page');
+
+		$User = D('User');
+		$Transaction = D('Transaction');
+		$Product = D('Product');
+
+		$count = $Transaction->where('BUID = ' . session('uid'))->count();
+		$Page = new Page($count, 1);
+		$page = $Page->show();
+
+		$transactions = $Transaction->where('BUID = ' . session('uid'))->order('TIMESTAMP DESC')->limit($Page->firstRow . ',' . $Page->listRows)->select();
+
+		foreach ($transactions as $key => $value) {
+			$product = $Product->find($value[PID]);
+			$transactions[$key][PRODUCT] = $product[NAME];
+			$transactions[$key][PRICE] = number_format($product[PRICE], 2);
+			$transactions[$key][SELLER] = $User->getUsername($value[SUID]);
+		}
+
+		$this->assign('transactions', $transactions);
+		$this->assign('page', $page);
+		$this->assign('TITLE', 'Transaction Record');
+		$this->display();
+	}
+
 	public function login() {
+		// C('TOKEN_ON',false);
 		if (IS_POST) {
 			$name = $this->_post('name');
 			$pwd = $this->_post('pwd');
@@ -42,13 +82,13 @@ class UserAction extends Action {
 			// 实例化User类
 			$User = D('User');
 			if ($User->create()) {
-				// 插入数据
 				$uid = $User->add();
 				if ($uid) {
+					$user = $User->find($uid);
 					// 注册成功，写session
 					session('uid',$uid);
-					session('username',$User->name);
-					session('avatar',"http://www.gravatar.com/avatar/" . md5(strtolower(trim($User->email))));
+					session('username',$user[USERNAME]);
+					session('avatar',"http://www.gravatar.com/avatar/" . md5(strtolower(trim($user[EMAIL]))));
 					$this->ajaxReturn($uid, 'Register success', 1);
 				}
 				else {
@@ -76,15 +116,6 @@ class UserAction extends Action {
 		redirect(U('/'));
 	}
 
-	public function index() {
-		$User = D('User');
-		$user = $User->getUser(session('uid'));
-
-		$this->assign('user',$user);
-		$this->assign('TITLE','User Center');
-		$this->display();
-	}
-
 	public function changePwd() {
 		if (IS_POST) {
 			$User = D('User');
@@ -99,6 +130,26 @@ class UserAction extends Action {
 			}
 			else {
 				$this->ajaxReturn(0, 'Old password is incorrect', 0);
+			}
+		}
+		else {
+			// 非POST方式提交时报错
+			$this->error('Invalid access');
+		}
+	}
+
+	public function charge() {
+		if (IS_POST) {
+			$amount = $this->_post('amount');
+
+			$User = D('User');
+			$result = $User->charge($amount);
+// dump($result);exit();
+			if ($result !== false) {
+				$this->ajaxReturn(number_format($result, 2),'Charge success',1);
+			}
+			else {
+				$this->ajaxReturn('','Charge error',0);
 			}
 		}
 		else {

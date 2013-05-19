@@ -1,0 +1,33 @@
+<div class="row">
+	<div id="nav-left" class="span3">
+		<ul class="nav nav-tabs nav-stacked">
+			<li><a href="__URL__">User Center</a></li>
+			<li class="active"><a href="javascript:void(0);">Transaction Record</a></li>
+		</ul>
+	</div>
+	<div class="span9">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Seller</th>
+					<th>Product</th>
+					<th>Time</th>
+					<th>Price</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody>
+			<volist id="transaction" name="transactions">
+				<tr>
+					<td>{$transaction.SELLER}</td>
+					<td>{$transaction.PRODUCT}</td>
+					<td>{$transaction.TIME|date="Y-m-d H:i", ###}</td>
+					<td>{$transaction.PRICE}</td>
+					<td>{$transaction.STATUS}</td>
+				</tr>
+			</volist>
+			</tbody>
+		</table>
+		<div id="pager" class="pagination">{$page}</div>
+	</div>
+</div>

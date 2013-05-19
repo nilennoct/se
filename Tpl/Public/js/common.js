@@ -19,6 +19,13 @@ function showChangePwdModal() {
 	});
 }
 
+function showChargeModal() {
+	$('#chargeModal').modal({
+		'keyboard': true,
+		'show': true
+	});
+}
+
 function togglePwVisibility() {
 	if ($('#togglePwVisibility i').hasClass('icon-eye-open')) {
 		$('.pwd-visible').attr('type', 'password');
@@ -33,13 +40,14 @@ function togglePwVisibility() {
 function postLogin() {
 	var name = $('#loginModal #nameLogin').val();
 	var pwd = $('#loginModal #pwdLogin').val();
+	var hash = $('#hash input').val();
 
 	if (name == '' || pwd == '') {
 		$('#infoLogin').text('Infomation not complete').addClass('alert-error').slideDown();
 		return false;
 	}
 	else {
-		$.post(ROOT + '/User/login', {'name': name, 'pwd': pwd}, function(json) {
+		$.post(ROOT + '/User/login', {'name': name, 'pwd': pwd, '__hash__': hash}, function(json) {
 			if (!json.status) {
 				$('#infoLogin').text(json.info).addClass('alert-error').slideDown();
 			}
@@ -57,17 +65,18 @@ function postRegister() {
 	var name = $('#registerModal #nameRegister').val();
 	var pwd = $('#registerModal #pwdRegister').val();
 	var email = $('#registerModal #emailRegister').val();
+	var hash = $('#hash input').val();
 
-	if (name == '' || pwd == '' || email == '') {
+	if (0 && name == '' || pwd == '' || email == '') {
 		$('#infoRegister').text('Infomation not complete').addClass('alert-error').slideDown();
 		return false;
 	}
 	else {
-		if (!name.match(/^\w{4,20}$/) || !email.match(/^[\w.-]+@\w+\.\w+$/)) {
+		if (0 && !name.match(/^\w{4,20}$/) || !email.match(/^[\w.-]+@\w+\.\w+$/)) {
 			$('#infoRegister').text('Format error').addClass('alert-error').slideDown();
 		}
 		else {
-			$.post(ROOT + '/User/register', {'name': name, 'pwd': pwd, 'email': email}, function(json) {
+			$.post(ROOT + '/User/register', {'name': name, 'pwd': pwd, 'email': email, '__hash__': hash}, function(json) {
 				if (!json.status) {
 					$('#infoRegister').text(json.info).addClass('alert-error').slideDown();
 				}
@@ -99,6 +108,41 @@ function postChangePwd() {
 				$('#infoChangePwd').text(json.info).removeClass('alert-error').addClass('alert-success').slideDown();
 				setTimeout(function() {
 					$('#changePwdModal').modal('hide');
+					$('#infoCharge').hide();
+					$('#changePwdModal input').each(function() {
+						$(this).val('');
+					});
+				}, 1500);
+			}
+		}, 'json');
+	}
+}
+
+function postCharge() {
+	var amount = parseFloat($('#chargeModal #amount').val());
+
+	if (amount == '') {
+		$('#infoCharge').text('Infomation not complete').addClass('alert-error').slideDown();
+		return false;
+	}
+	else if (amount < 0.01) {
+		$('#infoCharge').text('Amount format error').addClass('alert-error').slideDown();
+		return false;
+	}
+	else {
+		$.post(ROOT + '/User/charge', {'amount': amount}, function(json) {
+			if (!json.status) {
+				$('#infoCharge').text(json.info).addClass('alert-error').slideDown();
+			}
+			else {
+				$('#charge-panel ul#amount li span.balance').text('$ ' + json.data);
+				$('#infoCharge').text(json.info).removeClass('alert-error').addClass('alert-success').slideDown();
+				setTimeout(function() {
+					$('#chargeModal').modal('hide');
+					$('#infoCharge').hide();
+					$('#chargeModal input').each(function() {
+						$(this).val('');
+					});
 				}, 1500);
 			}
 		}, 'json');

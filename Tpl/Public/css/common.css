@@ -34,6 +34,20 @@ input[type="text"].password {
 #charge-panel > * {
 	margin-right: 10px;
 }
+#charge-panel ul#amount {
+	margin: 0;
+}
+#charge-panel ul#amount li {
+	list-style: none;
+	line-height: 20px;
+	padding-left: 10px;
+}
+#charge-panel ul#amount li span {
+	float: right;
+	margin-right: 10px;
+	font-size: 20px;
+	font-weight: bold;
+}
 #userinfo-table.table {
 	background-color: #fff;
 }

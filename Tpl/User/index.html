@@ -2,7 +2,7 @@
 	<div id="nav-left" class="span3">
 		<ul class="nav nav-tabs nav-stacked">
 			<li class="active"><a href="javascript:void(0);">User Center</a></li>
-			<li><a href="#">Transaction Record</a></li>
+			<li><a href="__URL__/transactions">Transaction Record</a></li>
 		</ul>
 	</div>
 	<div class="span9">
@@ -30,7 +30,14 @@
 				</div>
 			</div>
 			<div id="charge-panel" class="span3">
-				<div class="well">Charge</div>
+				<div class="well">
+					<ul id="amount">
+						<li>BALANCE <span class="balance">$ {$user.BALANCE}</span></li>
+						<li>FREEZE <span class="freeze">$ {$user.FREEZE}</span></li>
+					</ul>
+					<hr />
+					<a href="javascript:showChargeModal();" class="btn btn-success btn-block">Charge</a>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -63,5 +70,31 @@
 	<div class="modal-footer">
 		<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
 		<button class="btn btn-primary" onclick="postChangePwd();">Change</button>
+	</div>
+</div>
+
+<div id="chargeModal" class="modal small hide in">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3>Charge</h3>
+	</div>
+	<div class="modal-body">
+		<form class="form" onsubmit="return false;">
+			<div class="control-group">
+				<label class="control-label" for="nameRegister">Amount</label>
+				<div class="controls">
+					<div class="input-prepend">
+						<span class="add-on">$</span>
+						<input type="text" name="amount" id="amount" placeholder="Amount" required />
+					</div>
+				</div>
+			</div>
+		</form>
+
+		<div id="infoCharge" class="alert hide"></div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+		<button class="btn btn-primary" onclick="postCharge();">Charge</button>
 	</div>
 </div>
