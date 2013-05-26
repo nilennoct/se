@@ -1,3 +1,4 @@
+
 function showLoginModal() {
 	$('#loginModal').modal({
 		'keyboard': true,
@@ -21,6 +22,13 @@ function showChangePwdModal() {
 
 function showChargeModal() {
 	$('#chargeModal').modal({
+		'keyboard': true,
+		'show': true
+	});
+}
+
+function showRealnameModal() {
+	$('#realnameModal').modal({
 		'keyboard': true,
 		'show': true
 	});
@@ -141,6 +149,41 @@ function postCharge() {
 					$('#chargeModal').modal('hide');
 					$('#infoCharge').hide();
 					$('#chargeModal input').each(function() {
+						$(this).val('');
+					});
+				}, 1500);
+			}
+		}, 'json');
+	}
+}
+
+function postVerifyRealname() {
+	var rid = $('#realnameModal #rid').val();
+	var rname = $('#realnameModal #rname').val();
+
+	if (rid == '' || rname == '') {
+		$('#infoRealname').text('Infomation not complete').addClass('alert-error').slideDown();
+		return false;
+	}
+	else if (!rid.match(/\d{10}/)) {
+		$('#infoRealname').text('StudentID format error').addClass('alert-error').slideDown();
+		return false;
+	}
+	else {
+		$.post(ROOT + '/User/verifyRealname', {'rid': rid, 'rname': rname}, function(json) {
+			if (!json.status) {
+				$('#infoRealname').text(json.info).addClass('alert-error').slideDown();
+			}
+			else {
+				$('#table-rid').text(rid);
+				$('#table-rname').text(rname);
+				$('#btn-verify').attr('disabled', 'disabled').text('Real name verified');
+				$('#infoRealname').text(json.info).removeClass('alert-error').addClass('alert-success').slideDown();
+				setTimeout(function() {
+					$('#realnameModal').modal('hide');
+					$('#infoRealname').hide();
+					$('#realname-table').slideDown();
+					$('#realnameModal input').each(function() {
 						$(this).val('');
 					});
 				}, 1500);

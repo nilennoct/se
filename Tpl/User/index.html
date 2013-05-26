@@ -24,7 +24,25 @@
 									</tr>
 								</tbody>
 							</table>
-							<a href="javascript:showChangePwdModal();" class="btn btn-info btn-block">Change Password</a>
+							<button onclick="showChangePwdModal();" class="btn btn-info btn-block">Change Password</button>
+							<hr />
+							<table id="realname-table" class="table table-bordered <if condition="$user[ISREALNAME] eq 0">hide</if>">
+								<tbody>
+									<tr>
+										<th>StudentID</th>
+										<td id="table-rid">{$user.RID}</td>
+									</tr>
+									<tr>
+										<th>Real Name</th>
+										<td id="table-rname">{$user.RNAME}</td>
+									</tr>
+								</tbody>
+							</table>
+							<if condition="$user[ISREALNAME] eq 1">
+							<button id="btn-verify" onclick="showRealnameModal();" class="btn btn-block" disabled="disabled">Real name verified</button>
+							<else />
+							<button id="btn-verify" onclick="showRealnameModal();" class="btn btn-warning btn-block">Verify real name</button>
+							</if>
 						</div>
 					</div>
 				</div>
@@ -36,7 +54,7 @@
 						<li>FREEZE <span class="freeze">$ {$user.FREEZE}</span></li>
 					</ul>
 					<hr />
-					<a href="javascript:showChargeModal();" class="btn btn-success btn-block">Charge</a>
+					<button onclick="showChargeModal();" class="btn btn-success btn-block">Charge</a>
 				</div>
 			</div>
 		</div>
@@ -81,7 +99,7 @@
 	<div class="modal-body">
 		<form class="form" onsubmit="return false;">
 			<div class="control-group">
-				<label class="control-label" for="nameRegister">Amount</label>
+				<label class="control-label" for="amount">Amount</label>
 				<div class="controls">
 					<div class="input-prepend">
 						<span class="add-on">$</span>
@@ -96,5 +114,34 @@
 	<div class="modal-footer">
 		<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
 		<button class="btn btn-primary" onclick="postCharge();">Charge</button>
+	</div>
+</div>
+
+<div id="realnameModal" class="modal small hide in">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3>Charge</h3>
+	</div>
+	<div class="modal-body">
+		<form class="form" onsubmit="return false;">
+			<div class="control-group">
+				<label class="control-label" for="rid">StudentID</label>
+				<div class="controls">
+					<input type="text" name="rid" id="rid" placeholder="StudentID" required />
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="rname">Real name</label>
+				<div class="controls">
+					<input type="text" name="rname" id="rname" placeholder="Real name" required />
+				</div>
+			</div>
+		</form>
+
+		<div id="infoRealname" class="alert hide"></div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+		<button class="btn btn-primary" onclick="postVerifyRealname();">Verify</button>
 	</div>
 </div>

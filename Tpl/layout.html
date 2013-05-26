@@ -115,5 +115,14 @@
 </if>
 	<footer id="footer"></footer>
 
+	<script type="text/javascript">
+		$(function() {
+			$('.modal-body').delegate('input', 	'keypress', function(e) {
+				if ((e.keyCode ? e.keyCode : e.which) == 13) {
+					$(this).parents('.modal').find('.btn-primary').click();
+				}
+			});
+		});
+	</script>
 </body>
 </html>

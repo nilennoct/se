@@ -48,7 +48,7 @@ input[type="text"].password {
 	font-size: 20px;
 	font-weight: bold;
 }
-#userinfo-table.table {
+#userinfo-table.table, #realname-table.table {
 	background-color: #fff;
 }
 

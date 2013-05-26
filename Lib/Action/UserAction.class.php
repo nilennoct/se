@@ -2,7 +2,13 @@
 class UserAction extends Action {
 	public function _initialize() {
 		if ( ! session('uid') && ACTION_NAME != 'login' && ACTION_NAME != 'register') {
-			redirect(U('/'));
+			if (IS_POST) {
+				$this->ajaxReturn('','Session out of date, login again.',0);
+				exit();
+			}
+			else {
+				redirect(U('/'));
+			}
 		}
 	}
 
@@ -12,6 +18,11 @@ class UserAction extends Action {
 
 		$user[BALANCE] = number_format($user[BALANCE], 2);
 		$user[FREEZE] = number_format($user[FREEZE], 2);
+
+		if ($user[ISREALNAME] == 1) {
+			$Realname = D('Realname');
+			$user[RNAME] = $Realname->find($user[RID])[NAME];
+		}
 
 		C('TOKEN_ON',false);
 		$this->assign('user',$user);
@@ -150,6 +161,34 @@ class UserAction extends Action {
 			}
 			else {
 				$this->ajaxReturn('','Charge error',0);
+			}
+		}
+		else {
+			// 非POST方式提交时报错
+			$this->error('Invalid access');
+		}
+	}
+
+	public function verifyRealname() {
+		if (IS_POST) {
+			$rid = $this->_post('rid');
+			$rname = $this->_post('rname');
+
+			$Realname = D('Realname');
+			$User = D('User');
+
+			$user = $User->find(session('uid'));
+			if ($user[ISREALNAME] == 0) {
+				if ($Realname->verifyRealname($rid, $rname)) {
+					$User->where('UID = ' . session('uid'))->setField(array('RID' => $rid, 'ISREALNAME' => 1));
+					$this->ajaxReturn('','Verify success',1);
+				}
+				else {
+					$this->ajaxReturn('','Verify error',0);
+				}
+			}
+			else {
+				$this->ajaxReturn('','You\'ve verified',0);
 			}
 		}
 		else {
