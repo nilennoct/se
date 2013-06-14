@@ -21,7 +21,8 @@ class UserAction extends Action {
 
 		if ($user[ISREALNAME] == 1) {
 			$Realname = D('Realname');
-			$user[RNAME] = $Realname->find($user[RID])[NAME];
+			$rname = $Realname->find($user[RID]);
+			$user[RNAME] = $rname[NAME];
 		}
 
 		C('TOKEN_ON',false);
@@ -180,7 +181,7 @@ class UserAction extends Action {
 			$user = $User->find(session('uid'));
 			if ($user[ISREALNAME] == 0) {
 				if ($Realname->verifyRealname($rid, $rname)) {
-					$User->where('UID = ' . session('uid'))->setField(array('RID' => $rid, 'ISREALNAME' => 1));
+					$User->where('UID = ' . session('uid'))->setField(array('RID' => $rid, 'ISREALNAME' => 1, 'ISSELLER' => 1));
 					$this->ajaxReturn('','Verify success',1);
 				}
 				else {

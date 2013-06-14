@@ -88,4 +88,9 @@ class UserModel extends Model {
 			return false;
 		}
 	}
+
+	public function isSeller($uid) {
+		$user = $this->find($uid);
+		return $user[ISSELLER] == 1;
+	}
 }
