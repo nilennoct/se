@@ -1,0 +1,120 @@
+﻿<html>
+	<head>
+    	<link rel="stylesheet" href="../Public/css/datepicker.css">
+		<script src="../Public/js/bootstrap-datepicker.js"></script>
+ 	</head>
+<body>
+<div class="row">
+	<div id="nav-left" class="span3">
+		<ul class="nav nav-tabs nav-stacked">
+			<li><a href="__APP__/User">User Center</a></li>   <!--跳转至用户中心-->
+			<li class="active"><a href="javascript:void(0);">Transaction Record</a></li>
+		</ul>
+	</div>
+	<div class="span8">
+		<form method="post" class="well" onsubmit="return orderSelect();">
+			<font size=3>  Start time: </font>
+			<input id="dp1" class="span2" type="text" placeholder="yyyy-mm-dd" name="starttime">
+			<font size=3>  End time: </font>
+			<input id="dp2" class="span2" type="text" placeholder="yyyy-mm-dd" name="endtime">
+			<br>
+			<font size=3>  Type: </font>
+			<font size=2>  Wait for paying </font>
+			<input class="boolean optional" type="checkbox" name="checkbox[]" value="0" checked>
+			<font size=2>  Wait for delivering </font>
+			<input class="boolean optional" type="checkbox" name="checkbox[]" value="1" checked>
+			<font size=2>  Wait for receiving </font>
+			<input class="boolean optional" type="checkbox" name="checkbox[]" value="2" checked>
+			<font size=2>  Completed </font>
+			<input class="boolean optional" type="checkbox" name="checkbox[]" value="3" checked>
+			<font size=2>  Canceled</font>
+			<input class="boolean optional" type="checkbox" name="checkbox[]" value="4" checked>
+			<button type="submit" class="btn" name="sel_buy" value={$sel_buy}>Search</button>
+		</form>
+	</div>
+	<div class="span8 offset3">
+		<a href="__URL__/index/seller/{$bsswitch}"><input id="switch" class="btn btn-small btn-info" type="button" value="Buyer/Seller"></a>
+		<table class="table table-striped table-bordered table-condensed">
+			<thead>
+				<tr>
+					<th>No.</th>
+					<th>Seller</th>
+					<th>Buyer</th>
+					<th>Product</th>
+					<th>Time</th>
+					<th>Price</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody>
+			<volist id="transaction" name="transactions">
+				<tr>
+					<td><a href="__URL__/order/TID/{$transaction.NO}">{$transaction.NO}</a></td>
+					<td>{$transaction.SELLER}</td>
+					<td>{$transaction.BUYER}</td>
+					<td>{$transaction.PRODUCT}</td>
+					<td>{$transaction.TIME|date='Y-m-d h:i', ###}</td>
+					<td>{$transaction.PRICE}</td>
+					<td>{$transaction.STATUS}</td>
+				</tr>
+			</volist>
+			</tbody>
+		</table>
+		<div class="result page">{$page}</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(function(){
+		$('#dp1').datepicker({
+			format: 'yyyy-mm-dd'
+		});
+		$('#dp2').datepicker({
+			format: 'yyyy-mm-dd'
+		});
+	});
+	
+	$(function(){
+		if(!{$isseller})		<!--判断是否有卖家买家两种身份-->
+			$("#switch").hide();			<!--如果没有两种身份，隐藏切换按钮-->
+	});
+	
+	function orderSelect() {
+		var starttime = $('#dp1').val();
+		var endtime = $('#dp2').val();
+		var arr1 = starttime.split("-");
+		var arr2 = endtime.split("-");
+		if( (starttime==""||starttime.match(/^(\d{4})(-)(\d{1,2})\2(\d{1,2})$/)) && (endtime==""||endtime.match(/^(\d{2,4})(-|\/)(\d{1,2})\2(\d{1,2})$/)) )
+		{
+			if(starttime!="")
+				if(arr1[0]<=1970||arr1[1]>12||arr1[2]>31)
+				{
+					alert('输入的日期格式有误');
+					return false;
+				}
+			if(endtime!="")
+				if(arr2[0]<=1970||arr2[1]>12||arr2[2]>31)
+				{
+					alert('输入的日期格式有误');
+					return false;
+				}
+			if(starttime!=""&&endtime!="")
+			{
+				var tDate1 = new Date(arr1[0],arr1[1],arr1[2]);
+				var tDate2 = new Date(arr2[0],arr2[1],arr2[2]);
+				if(tDate1>=tDate2)
+				{
+					alert('开始日期必须大于结束日期');
+					return false;
+				}
+			}
+			return true;
+		}
+		else
+		{
+			alert('输入的日期格式有误');
+			return false;
+		}
+	}
+</script>
+</body>
+</html>

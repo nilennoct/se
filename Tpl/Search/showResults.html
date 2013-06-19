@@ -1,0 +1,139 @@
+<html>
+	<head>
+   		<title>Search Hotel</title>
+		<style>
+		p{
+		color:#009999;
+		font-weight:bold;
+		font-size:20px;
+		text-align:center;}
+		</style>
+ 	</head>
+ 	<body>
+ 		<include file="./Tpl/Public/head.html" />
+ 		<include file= "./Tpl/Search/searchform.html"/>
+ 		<div class="row" style="margin-top:20px;">
+ 		 	<div class="span7">
+ 			<if condition="($hview eq 1)">
+ 				<p>Hotel Information</p>
+    			<table class="table table-hover" style="font-family:Verdana;">
+    				<tr>
+    					<td>Hotel name</td>
+    					<td>Popularity</td>
+    					<td>Average score</td>
+    					<td>Star level</td>
+    					<td>Address</td>
+    				</tr>
+    				<volist name="hinfo" id="vo">
+    					<tr>
+    						<td>{$vo.HNAME}</td>
+    						<td>{$vo.TOTAL}</td>
+    						<td>{$vo.AVERAGE}</td>
+    						<td>{$vo.STAR}</td>
+    						<td>{$vo.ADDRESS}</td>
+    					</tr>
+    					<tr>
+    						<td></td><td></td><td></td><td></td>
+    						<td style="text-align:right;">
+    							<a href="__URL__/showDetails?hid={$vo.HID}">Details</a>
+    						</td>
+    					</tr>
+    				</volist>
+				</table>   			
+    		</if>
+    		<if condition="($fview eq 1)">
+ 				<p>Flight Information</p>
+    			<table class="table table-hover" style="font-family:Verdana;">
+    				<tr>
+    					<td>Flight number</td>
+    					<td>Popularity</td>
+    					<td>Average score</td>
+    					<td>Company</td>
+    					<td>Depart time</td>
+    					<td>Arrive time</td>
+    					<td>Starting city</td>
+    					<td>Destination city</td>
+    				</tr>
+    				<volist name="finfo" id="vo">
+    					<tr>
+    						<td>{$vo.FNAME}</td>
+    						<td>{$vo.TOTAL}</td>
+    						<td>{$vo.AVERAGE}</td>
+    						<td>{$vo.COMPANY}</td>
+    						<td>{$vo.DEPARTTIME}</td>
+    						<td>{$vo.ARRIVETIME}</td>
+    						<td>{$vo.STARTING}</td>
+    						<td>{$vo.DESTINATION}</td>
+    					</tr>
+    					<tr>
+    						<td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+    						<td style="text-align:right;">
+    							<a href="__URL__/showDetails?fid={$vo.FID}">Details</a>
+    						</td>
+    					</tr>
+    				</volist>
+				</table>   			
+    		</if>
+    		</div>
+    		<div class="span5">
+    			<if condition="($hview eq 1)">
+    				<p>Rooms In Discount</p>
+    				<table class="table table-hover" style="font-family:Verdana;">
+    					<tr>
+    						<td>Hotel name</td>
+    						<td>Popularity</td>
+    						<td>Address</td>
+    						<td>Room Price</td>
+    						<td>Discount</td>
+    					</tr>
+    					<volist name="dinfo" id="vo">
+    						<tr>
+    							<td>{$vo.HNAME}</td>
+    							<td>{$vo.TOTAL}</td>
+    							<td>{$vo.ADDRESS}</td>
+    							<td>{$vo.PRICE}</td>
+    							<td>{$vo.DISCOUNT}</td>
+    						</tr>
+    						<tr>
+  		  						<td></td><td></td><td></td><td></td>
+    							<td style="text-align:right;">
+    								<a href="__URL__/showDetails?hid={$vo.HID}">Details</a>
+    							</td>
+    						</tr>
+    					</volist>
+    				</table>
+    			</if>
+    			<if condition="($fview eq 1)">
+    				<p>Flight Seats In Discount</p>
+    				<table class="table table-hover" style="font-family:Verdana;">
+    					<tr>
+    						<td>Flight Number</td>
+    						<td>Popularity</td>
+    						<td>Starting City</td>
+    						<td>Destination City</td>
+    						<td>Seat Price</td>
+    						<td>Discount</td>
+    					</tr>
+    					<volist name="dinfo" id="vo">
+    						<tr>
+    							<td>{$vo.FNAME}</td>
+    							<td>{$vo.TOTAL}</td>
+    							<td>{$vo.STARTING}</td>
+    							<td>{$vo.DESTINATION}</td>
+    							<td>{$vo.PRICE}</td>
+    							<td>{$vo.DISCOUNT}</td>
+    						</tr>
+    						<tr>
+  		  						<td></td><td></td><td></td><td></td><td></td>
+    							<td style="text-align:right;">
+    								<a href="__URL__/showDetails?fid={$vo.FID}">Details</a>
+    							</td>
+    						</tr>
+    					</volist>
+    				</table>
+    			</if>  			
+    		</div>
+    	</div>
+    	<include file="./Tpl/Public/footer.html" />
+  	</body>
+</html>

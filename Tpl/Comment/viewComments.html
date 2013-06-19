@@ -1,0 +1,97 @@
+<html>
+	<head>
+		<title>Comments</title>
+		<style>
+			p{
+			color:#009999;
+			font-weight:bold;
+			font-size:20px;
+			text-align:left;}
+			legend{
+			color:#009999;
+			font-weight:bold;
+			font-size:20px;
+			text-align:left;}
+		</style>
+		<script>
+			function goHome(){
+				window.location.href="__APP__/User/index";
+			}
+		</script>
+	</head>
+ 
+<body>	
+	<div class="span9 offset1">
+		<p>Transaction Information</p>
+    	<table class="table table-hover" style="font-family:Verdana;">
+    		<if condition="($roomorseat eq 0)">
+    			<tr>
+    				<td>Transaction ID</td>
+    				<td>Hotel name</td>
+    				<td>Star level</td>
+    				<td>Hotel address</td>
+    				<td>Hotel description</td>
+    				<td>Room price</td>
+    				<td>Room discount</td>
+    				<td>Room description</td>
+    				<td>Time stamp</td>
+				</tr>
+    			<tr>
+    				<td>{$tinfo.TID}</td>
+    				<td>{$pinfo.HNAME}</td>
+    				<td>{$pinfo.STAR}</td>
+    				<td>{$pinfo.ADDRESS}</td>
+    				<td>{$pinfo.DESCRIPTION}</td>
+    				<td>{$pinfo.PRICE}</td>
+    				<td>{$pinfo.DISCOUNT}</td>
+    				<td>{$pinfo.RDESCRIPTION}</td>
+    				<td>{$tinfo.TIMESTAMP}</td>
+    			</tr>
+    		<else />
+    			<tr>
+    				<td>Transaction ID</td>
+    				<td>Flight number</td>
+    				<td>Company</td>
+    				<td>Depart time</td>
+    				<td>Arrive time</td>
+    				<td>Starting city</td>
+    				<td>Destination city</td>
+    				<td>Seat price</td>
+    				<td>Seat discount</td>    				
+    				<td>Seat description</td>
+    				<td>Time stamp</td>
+				</tr>
+    			<tr>
+    				<td>{$tinfo.TID}</td>
+    				<td>{$pinfo.FNAME}</td>
+    				<td>{$pinfo.COMPANY}</td>
+    				<td>{$pinfo.DEPARTTIME}</td>
+    				<td>{$pinfo.ARRIVETIME}</td>
+    				<td>{$pinfo.STARTING}</td>
+    				<td>{$pinfo.DESTINATION}</td>
+    				<td>{$pinfo.PRICE}</td>
+    				<td>{$pinfo.DISCOUNT}</td>
+    				<td>{$pinfo.SDESCRIPTION}</td>
+    				<td>{$tinfo.TIMESTAMP}</td>
+    			</tr>
+    		</if> 
+		</table> 
+		<form method="post" action="__URL__/editComments">
+			<fieldset>
+				<legend>Submit score and comments</legend>
+				<label>Score</label>
+				<input class="input-mini" type="text" placeholder="0-100" name="score">
+				<label>Comments</label>
+				<textarea class="span4" type="text" rows="6" placeholder="Type anything you want to say..." name="comment"></textarea>
+				<br />
+				<input type="hidden" name="tid" value="{$tinfo.TID}">
+				<input type="hidden" name="roomorseat" value="{$roomorseat}">
+				<input type="hidden" name="hid" value="{$pinfo.HID}">
+				<input type="hidden" name="fid" value="{$pinfo.FID}">
+				<button type="submit" class="btn btn-primary">Submit</button>
+				<button class="btn" onclick="goHome()">Cancel</button>				
+			<fieldset>
+		</form>   	
+	</div>
+ </body>
+</html>

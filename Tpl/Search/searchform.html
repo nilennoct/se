@@ -1,0 +1,124 @@
+<html>
+	<head>
+   		<title>Search Hotel</title>
+		<style>
+		p{
+		color:#009999;
+		font-weight:bold;
+		font-size:20px;
+		text-align:center;}
+		</style>
+		<script>
+			function postHotelSearch(){
+				document.hform.submit();
+            } 
+            function postFlightSearch(){
+				document.fform.submit();
+            } 
+		</script>
+ 	</head>
+<body>
+<div class="row" style="text-align:center; margin-top:50px;" >
+	<form class="form-search" method="post" action="__URL__/showResults">
+	    <button class="btn" href="#hoption" data-toggle="modal">Option</button>
+	    <select name="horder" class="span2">
+	    	<option>Popularity</option>
+  			<option>Star level</option>
+  			<option>Score</option>
+  		</select>
+  		<div class="input-append">
+    		<input name="hname" placeholder="hotel name" type="text" class="span2 search-query">
+    		<button type="submit" class="btn">Search</button>
+  		</div>
+  		<div class="input-prepend" style="margin-left:30px;">
+    		<button type="submit" class="btn">Search</button>
+    		<input name="fname" placeholder="flight number" type="text" class="span2 search-query">
+  		</div>
+	    <select name="forder" class="span2">
+	    	<option>Popularity</option>
+  			<option>Score</option>
+  		</select>
+  		<button class="btn" href="#foption" data-toggle="modal">Option</button>
+	</form>
+</div>
+<div id="hoption" class="modal hide fade" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <p>Search Hotels in Details</p>
+  </div>
+  <div class="modal-body">
+    <form method="post" action="__URL__/showResults" name="hform">
+    	<div class="row">
+    		<div class="span3">
+    			<label>Hotel name</label>
+    			<input type="text" class="input-medium" name="name" placeholder="Like qizhen...">
+    			<label>Star level</label>
+    			<input type="text" class="input-small" name="star" placeholder="1-5">
+    		</div>
+    		<div class="span3">
+    			<label>Popularity</label>
+    			<input type="text" class="input-medium" name="total" placeholder="A positive number">
+    			<label>Average score</label>
+    			<input type="text" class="input-small" name="average" placeholder="0-100">
+    		</div>
+    	</div>
+    	<label>Address</label>
+    	<input type="text" class="input-large" name="address" placeholder="City name, Street name...">
+    	<label>Order by</label>
+    	<select name="order" class="span2">
+	    	<option>Popularity</option>
+  			<option>Star level</option>
+  			<option>Score</option>
+  		</select>
+  		<input type="hidden" class="input-small" name="hdetail" value="1">
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <button class="btn btn-primary" onclick="postHotelSearch();">Search</button>
+  </div>
+</div>
+<div id="foption" class="modal hide fade" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <p>Search Flights in Details</p>
+  </div>
+  <div class="modal-body">
+    <form method="post" action="__URL__/showResults" name="fform">
+    	<div class="row">
+    		<div class="span3">
+    			<label>Flight number</label>
+    			<input type="text" class="input-small" name="name" placeholder="Like AB1234...">
+    			<label>Company</label>
+    			<input type="text" class="input-medium" name="company" placeholder="Like China Air Line...">
+    			<label>Popularity</label>
+    			<input type="text" class="input-medium" name="total" placeholder="A positive number">
+    			<label>Average score</label>
+    			<input type="text" class="input-small" name="average" placeholder="0-100">
+    		</div>
+    		<div class="span3">
+    			<label>Depart time</label>
+    			<input type="text" class="input-medium" name="departtime" placeholder="00:00:00-23:59:59">
+    			<label>Arrive time</label>
+    			<input type="text" class="input-medium" name="arrivetime" placeholder="00:00:00-23:59:59">
+    			<label>Starting city</label>
+    			<input type="text" class="input-medium" name="starting" placeholder="Like Hangzhou...">
+    			<label>Destination city</label>
+    			<input type="text" class="input-medium" name="destination" placeholder="Like Chengdu...">
+    		</div>
+    	</div>
+    	<label>Order by</label>
+    	<select name="order" class="span2">
+	    	<option>Popularity</option>
+  			<option>Score</option>
+  		</select>
+  		<input type="hidden" class="input-small" name="fdetail" value="1">
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <button class="btn btn-primary" onclick="postFlightSearch();">Search</button>
+  </div>
+</div>
+</body>
+</html>

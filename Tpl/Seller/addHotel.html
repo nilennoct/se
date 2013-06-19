@@ -1,0 +1,73 @@
+<html>
+	<head>
+    	<title>Add Hotel</title>
+    	<style>
+			p{
+			color:#009999;
+			font-weight:bold;
+			font-size:20px;
+			text-align:left;}
+		</style>
+ 	</head>
+<body>
+    <include file="./Tpl/Public/head.html" />
+    <div class="tabbable tabs-left offset1" style="margin-top:80px">
+  		<ul class="nav nav-tabs">
+    	<li class="active">
+			<a href="__URL__/addHotel">Add hotel</a>
+		</li>
+		<li>
+			<a href="__URL__/viewHotel">Edit hotel</a>
+		</li>
+		<li>
+			<a href="__URL__/addRoom">Add room</a>
+		</li>
+		<li>
+			<a href="__URL__/viewRoom">Edit room</a>
+		</li>
+		<li>
+			<a href="__URL__/addFlight">Add flight</a>
+		</li>
+		<li>
+			<a href="__URL__/viewFlight">Edit flight</a>
+		</li>
+		<li>
+			<a href="__URL__/addSeat">Add seat</a>
+		</li>
+		<li>
+			<a href="__URL__/viewSeat">Edit seat</a>
+		</li>
+  		</ul>
+  		<div class="tab-content" style="margin-left:200px">
+    		<div class="tab-pane active">
+    			<p>Hotel Information</p>
+    			<br/>
+    			<form method="post" action="__URL__/insertHotel">
+      				<table>
+        				<tr>
+            				<td>Hotel name:</td>
+            				<td><INPUT type="text" class="input-small" name="HNAME"></td>
+        				</tr>
+						<tr>
+							<td>Star level:</td>
+							<td><INPUT type="text" class="input-mini" name="STAR"></td>
+						</tr>
+						<tr>
+							<td>Address:</td>
+							<td><INPUT type="text" class="input-large" name="ADDRESS"></td>
+						</tr>
+						<tr>
+							<td>Description:</td>
+							<td><INPUT type="text" class="input-xlarge" name="DESCRIPTION"></td>
+						</tr>
+						<tr>
+		    				<td><button class="btn btn-primary" type="submit">Confirm</button></td>
+						</tr>
+	  				</table>
+				</form>
+    		</div>
+  		</div>
+	</div>
+	<include file="./Tpl/Public/footer.html" />
+</body>
+</html>

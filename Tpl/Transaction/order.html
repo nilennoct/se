@@ -1,0 +1,122 @@
+﻿<div class="row">
+	<div id="nav-left" class="span3">
+		<ul class="nav nav-tabs nav-stacked">
+			<li><a href="__APP__/User">User Center</a></li>   <!--跳转至用户中心-->
+			<!--<li class="active">这里的active使该条目呈白色，以说明在当前选项页面中<a href="javascript:void(0);">Transaction Record</a></li> -->
+			<li><a href="__APP__/Transaction">Transaction Record</a></li>
+		</ul>
+	</div>
+	<div class="span9">
+		<table  id="order" class="table table-bordered"> <!--传说中的增加表格边框及圆角-->
+			<caption style="font-size:30px; height:60px;"><b>Order Information</b></caption>
+			<tr>
+				<th style="width:20%;">Order Number</th>  <!--固定比例-->
+				<td>{$Order_TID}</td>
+			</tr>
+			<tr>
+				<th>Seller</th>
+				<td>{$Order_SELLER}</td>
+			</tr>
+			<tr>
+				<th>Buyer</th>
+				<td>{$Order_BUYER}</td>
+			</tr>
+			<tr>
+				<th>Product</th>
+				<td>{$Order_PRODUCT}</td>
+			</tr>
+			<tr>
+				<th>Total Price</th>
+				<td>{$Order_PRICE}</td>
+			</tr>
+			<tr>
+				<th>Time</th>
+				<td>{$Order_TIME|date='Y-m-d h:i', ###}</td>
+			</tr>
+			<tr>
+				<th>Status</th>
+				<td>{$Order_STATUS}</td>
+			</tr>
+		</table>
+		<p style="text-align:center;"> <!--按钮居中-->
+			<input id="state" type="button" class="btn btn-small btn-primary" style="display:none" onclick="changestate()">
+			<a id="payfor" href = "#mydialog" class="btn btn-small btn-primary" type="button" data-toggle="modal" style="display:none">Pay</a>  <!--调用确认支付的对话框-->
+			<a id="back" href="__APP__/Transaction/" class="btn btn-small btn-primary" type="button">Back</a>
+			
+		</p> 
+		<p style="text-align:center;">
+			<a id="complaint" href="__APP__/Transaction/complaint/TID/{$Order_TID}" class="btn btn-small btn-primary" type="button" style="display:none">Complaint</a>
+			<a id="com_res" href="__APP__/Transaction/complaint_result/TID/{$Order_TID}" class="btn btn-small btn-primary" type="button" style="display:none">Inquire complaint result</a>
+			<a href="__APP__/Comment/viewComments?TID={$Order_TID}" id="comment" class="btn btn-small btn-primary"style="display:none"> Comment</a>
+		</p>
+	</div>
+</div>
+
+<!--一个确认支付的模态对话框，通过id为payfor的按钮调用-->
+<div id="mydialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Confirm Payment</h3>
+  </div>
+  <div class="modal-body">
+    <p>Are you sure to pay for？</p>
+  </div>
+  <div class="modal-footer">
+  	<button class="btn btn-primary" onclick= "payfor()">Ok</button>  <!--在cli函数中判断余额是否够-->
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div>
+<script type="text/javascript">
+	$(function() {
+		if({$state}==1){  <!--if条件判断是否为卖家-->
+			switch({$order_state})
+			{
+				case 0:break;
+				case 1:$("#state").val("Delivered"); $("#state").show(); break; <!--显示已发货按钮-->
+				case 2:break;
+				case 3:break;
+				case 4:break;
+			}
+		}
+		else{  <!--判断是否为买家-->
+			switch({$order_state})
+			{
+				case 0:$("#payfor").show(); break;
+				case 1:break;
+				case 2:$("#state").val("Received"); $("#state").show(); break; <!--如果还在等待收货状态，显示确认收货按钮-->
+				case 3:$("#eval").show(); break;
+				case 4:break;
+			}
+			$("#comment").show();
+		}
+		
+		if ({$iscomplanit}==1) {  <!--需要在这里判断是否有过投诉，如果没有投诉，显示投诉结果按钮-->
+			$("#com_res").show();
+		}
+		else{
+			$("#complaint").show();  <!--如果已经投诉，显示投诉按钮-->
+		}
+	});
+</script>
+<script type="text/javascript">
+	function payfor()
+　　{
+		var id = {$Order_TID};
+		$.post("__APP__/Transaction/payment",{'TID': id},
+		function(json){
+			alert(json.info);			<!--弹出提示对话框-->
+			location.reload();
+		},'json');
+　　}
+</script>
+<script type="text/javascript">
+	function changestate()
+	{
+		var id = {$Order_TID};
+		$.post("__APP__/Transaction/changestate",{'TID': id},
+		function(json){
+			alert(json.info);			<!--弹出提示对话框-->
+			location.reload();
+		},'json');
+	}
+</script>

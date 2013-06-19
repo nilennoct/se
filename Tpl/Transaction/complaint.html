@@ -1,0 +1,53 @@
+<div class="row">
+	<div id="nav-left" class="span3">
+		<ul class="nav nav-tabs nav-stacked">
+			<li><a href="__APP__/User">User Center</a></li>   <!--跳转至用户中心-->
+			<!--<li class="active">这里的active使该条目呈白色，以说明在当前选项页面中<a href="javascript:void(0);">Transaction Record</a></li> -->
+			<li><a href="__APP__/Transaction">Transaction Record</a></li>
+		</ul>
+	</div>
+	
+	<div class="span9">
+		<div style="text-align:center; font-size:30px; height:60px">
+			<p>
+				<b>Consumer Complaint</b>
+			</p>
+		</div>
+		
+		<form class="form-horizontal" method="post" onsubmit="return postComplaint();">
+			<div class="control-group">
+				<label class="control-label" for="inputOrderNum">Order Number</label>
+				<div class="controls">
+					{$OrderNumber}
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputReason">Reason</label>
+				<div class="controls">
+					<textarea style="width:80%; height:350px" id="inputReason" name="REASON" placeholder="小于200个字符"></textarea>
+				</div>
+			</div>
+			<p style="text-align:center;"> <!--按钮居中-->
+				<button type="submit" class="btn btn-small btn-primary" name="TID" value="{$TID}">Submit</button>
+				<a href="__APP__/Transaction/order/TID/{$TID}" class="btn btn-small btn-primary">Back</a>
+			</p>
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+	function postComplaint() {
+		var reason = $('#inputReason').val();
+		if( reason=="")
+		{
+			alert('投诉内容不能为空');
+			return false;
+		}
+		else if(!reason.match(/^.{0,200}$/))
+		{
+			alert('输入的理由格式有误');
+			return false;
+		}
+		else
+			return true;
+	}
+</script>

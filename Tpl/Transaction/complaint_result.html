@@ -1,0 +1,49 @@
+<body>
+<div class="row">
+	<div id="nav-left" class="span3">
+		<ul class="nav nav-tabs nav-stacked">
+			<li><a href="__APP__/User">User Center</a></li>   <!--跳转至用户中心-->
+			<!--<li class="active">这里的active使该条目呈白色，以说明在当前选项页面中<a href="javascript:void(0);">Transaction Record</a></li> -->
+			<li><a href="__APP__/Transaction">Transaction Record</a></li>
+		</ul>
+	</div>
+	
+	<div class="span9">
+		<table id="complaint" class="table table-bordered">
+			<caption style="font-size:30px; height:60px"><b>Complain Information</b></caption>
+			<tr>
+				<th style="width:40%;text-align:center;">Order Number</th>
+				<td>{$complaint_TID}</td>
+			</tr>
+			<tr>
+				<th style="text-align:center;">Buyer</th>
+				<td>{$complaint_BUYER}</td>
+			</tr>
+			<tr>
+				<th style="text-align:center;">Seller</th>
+				<td>{$complaint_SELLER}</td>
+			</tr>
+			<tr>
+				<th style="text-align:center;">Complaint Time</th>
+				<td>{$complaint_TIME|date='Y-m-d h:i', ###}</td>
+			</tr>
+			<tr>
+				<th style="text-align:center;">Complainant</th>
+				<td>{$complaint_USER}</td>
+			</tr>
+			<tr>
+				<th style="text-align:center;">Reason</th>
+				<td>{$complaint_REASON}</td>
+			</tr>
+			<tr>
+				<th style="text-align:center;">Status</th>
+				<td>{$complaint_STATUS}</td>
+			</tr>
+		</table>
+
+		<p style="text-align:center;"> <!--按钮居中-->
+			<a href="__APP__/Transaction/order/TID/{$complaint_TID}" class="btn btn-small btn-primary">back</a>
+		</p>
+	</div>
+</div>
+</body>

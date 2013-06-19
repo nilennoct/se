@@ -1,0 +1,159 @@
+<html>
+	<head>
+   		<title>Search Hotel</title>
+		<style>
+		p{
+		color:#009999;
+		font-weight:bold;
+		font-size:20px;
+		text-align:center;}
+		</style>
+ 	</head>
+ 	<body>
+ 		<include file="./Tpl/Public/head.html" />
+ 		<div class="row" style="margin-top:50px;">
+ 			<if condition="($roomorseat eq 0)">
+ 			<div class="span6">
+ 				<p>Hotel Information</p>
+    			<table class="table table-hover" style="font-family:Verdana;">
+    				<tr>
+    					<td>Hotel name</td>
+    					<td>Popularity</td>
+    					<td>Average score</td>
+    					<td>Star level</td>
+    					<!--<td>Seller ID</td>-->
+    					<td>Address</td>
+    					<td>Description</td>
+    				</tr>
+    				<tr>
+    					<td>{$hinfo.HNAME}</td>
+    					<td>{$hinfo.TOTAL}</td>
+    					<td>{$hinfo.AVERAGE}</td>
+    					<td>{$hinfo.STAR}</td>
+    					<!--<td>{$hinfo.SUID}</td>-->
+    					<td>{$hinfo.ADDRESS}</td>
+						<td>{$hinfo.DESCRIPTION}</td>
+    				</tr>
+				</table>
+				<p style="top-margin:30px;">Room Information</p>
+				<table class="table table-hover" style="font-family:Verdana;">
+    				<tr>
+    					<td>Description</td>
+    					<td>Price</td>
+    					<td>Discount</td>
+    					<td>Available number</td>
+    				</tr>
+    				<volist name="rinfo" id="vo">
+    					<tr>
+    						<td>{$vo.RDESCRIPTION}</td>
+    						<td>{$vo.PRICE}</td>
+    						<td>{$vo.DISCOUNT}</td>
+    						<td>{$vo.AVAILABLE}</td>
+    					</tr>
+    					<tr>
+    						<td></td><td></td><td></td>
+    						<td style="text-align:right;">
+    							<a href="__APP__/Transaction/createorder?PID={$vo.PID}&SUID={$hinfo.SUID}&ROOMORSEAT=0">Book</a>
+    						</td>
+    					</tr>
+    				</volist>
+				</table>    			
+    		</div>
+    		<div class="span6">
+    			<p>Transaction Information</p>
+    			<table class="table table-hover" style="font-family:Verdana;">
+    				<tr>
+    					<td>Transaction ID</td>
+    					<td>Price</td>
+    					<td>Score</td>
+    					<td>Comments</td>
+    					<td>Date Time</td>
+    				</tr>
+    				<volist name="tinfo" id="vo">
+    					<tr>
+    						<td>{$vo.TID}</td>
+    						<td>{$vo.PRICE}</td>
+    						<td>{$vo.SCORE}</td>
+    						<td>{$vo.COMMENT}</td>
+    						<td>{$vo.DATETIME}</td>
+    					</tr>
+    				</volist>
+				</table>    	
+    		</div>
+    		<else />
+    		<div class="span7">
+ 				<p>Flight Information</p>
+    			<table class="table table-hover" style="font-family:Verdana;">
+    				<tr>
+    					<td>Flight number</td>
+    					<!--<td>Popularity</td>
+    					<td>Average score</td>-->
+    					<td>Company</td>
+    					<!--<td>Seller ID</td>-->
+    					<td>Depart time</td>
+    					<td>Arrive time</td>
+    					<td>Starting city</td>
+    					<td>Destination city</td>
+    				</tr>
+    				<tr>
+    					<td>{$finfo.FNAME}</td>
+    					<!--<td>{$finfo.TOTAL}</td>
+    					<td>{$finfo.AVERAGE}</td>-->
+    					<td>{$finfo.COMPANY}</td>
+    					<!--<td>{$finfo.SUID}</td>-->
+    					<td>{$finfo.DEPARTTIME}</td>
+						<td>{$finfo.ARRIVETIME}</td>
+    					<td>{$finfo.STARTING}</td>
+    					<td>{$finfo.DESTINATION}</td>
+    				</tr>
+				</table>
+				<p style="top-margin:30px;">Seat Information</p>
+				<table class="table table-hover" style="font-family:Verdana;">
+    				<tr>
+    					<td>Description</td>
+    					<td>Price</td>
+    					<td>Discount</td>
+    					<td>Available number</td>
+    				</tr>
+    				<volist name="sinfo" id="vo">
+    					<tr>
+    						<td>{$vo.SDESCRIPTION}</td>
+    						<td>{$vo.PRICE}</td>
+    						<td>{$vo.DISCOUNT}</td>
+    						<td>{$vo.AVAILABLE}</td>
+    					</tr>
+    					<tr>
+    						<td></td><td></td><td></td>
+    						<td style="text-align:right;">
+    							<a href="__APP__/Transaction/createorder?PID={$vo.PID}&SUID={$finfo.SUID}&ROOMORSEAT=1">Book</a>
+    						</td>
+    					</tr>
+    				</volist>
+				</table>    			
+    		</div>
+    		<div class="span5">
+    			<p>Transaction Information</p>
+    			<table class="table table-hover" style="font-family:Verdana;">
+    				<tr>
+    					<td>Transaction ID</td>
+    					<td>Price</td>
+    					<td>Score</td>
+    					<td>Comments</td>
+    					<td>Time Stamp</td>
+    				</tr>
+    				<volist name="tinfo" id="vo">
+    					<tr>
+    						<td>{$vo.TID}</td>
+    						<td>{$vo.PRICE}</td>
+    						<td>{$vo.SCORE}</td>
+    						<td>{$vo.COMMENT}</td>
+    						<td>{$vo.DATETIME}</td>
+    					</tr>
+    				</volist>
+				</table>    	
+    		</div>
+    		</if>
+    	</div>
+    	<include file="./Tpl/Public/footer.html" />
+  	</body>
+</html>
