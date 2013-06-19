@@ -21,15 +21,18 @@ class CommentAction extends Action{
             }
             $this->display();
         }
-        else
+        else{
             $this->error("This is not your transaction!", "__APP__/User");
+        }
+
     }
     public function editComments(){
         $score = $_POST['score'];
         $comment = $_POST['comment'];
         $tid = $_POST['tid'];
         $Transaction = D('Transaction');
-        if($Transaction->setComment($tid, $score, $comment)){
+        if($score && $comment){  
+            $Transaction->setComment($tid, $score, $comment);                  
             if ($_POST['roomorseat']==0){
                 $Hotel = D('Hotel');
                 $hid = $_POST['hid'];
@@ -42,8 +45,9 @@ class CommentAction extends Action{
             }
             $this->success("Comment submitted!", "__APP__/User");
         }
-        else
-            $this->error("Comment submit failed!", "__APP__/User");
+        else{
+            $this->error("Input not enough.");
+        }
     }
-    
+
 }

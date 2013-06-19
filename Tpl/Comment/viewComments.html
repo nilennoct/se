@@ -13,11 +13,6 @@
 			font-size:20px;
 			text-align:left;}
 		</style>
-		<script>
-			function goHome(){
-				window.location.href="__APP__/User/index";
-			}
-		</script>
 	</head>
  
 <body>	
@@ -76,22 +71,32 @@
     			</tr>
     		</if> 
 		</table> 
-		<form method="post" action="__URL__/editComments">
-			<fieldset>
-				<legend>Submit score and comments</legend>
-				<label>Score</label>
-				<input class="input-mini" type="text" placeholder="0-100" name="score">
-				<label>Comments</label>
-				<textarea class="span4" type="text" rows="6" placeholder="Type anything you want to say..." name="comment"></textarea>
-				<br />
-				<input type="hidden" name="tid" value="{$tinfo.TID}">
-				<input type="hidden" name="roomorseat" value="{$roomorseat}">
-				<input type="hidden" name="hid" value="{$pinfo.HID}">
-				<input type="hidden" name="fid" value="{$pinfo.FID}">
-				<button type="submit" class="btn btn-primary">Submit</button>
-				<button class="btn" onclick="goHome()">Cancel</button>				
-			<fieldset>
-		</form>   	
+		<if condition="(strlen($tinfo['COMMENT']) eq 0)">
+			<form method="post" action="__URL__/editComments">
+				<fieldset>
+					<legend>Submit score and comments</legend>				
+					<label>Score</label>
+					<input class="input-mini" type="text" placeholder="0-100" name="score">
+					<label>Comments</label>
+					<textarea class="span4" type="text" rows="6" placeholder="Type anything you want to say..." name="comment"></textarea>
+					<br />
+					<input type="hidden" name="tid" value="{$tinfo.TID}">
+					<input type="hidden" name="roomorseat" value="{$roomorseat}">
+					<input type="hidden" name="hid" value="{$pinfo.HID}">
+					<input type="hidden" name="fid" value="{$pinfo.FID}">
+					<button type="submit" class="btn btn-primary">Submit</button>
+					<a class="btn" href="__APP__/User">Cancel</a>				
+				</fieldset>
+			</form> 
+		<else />
+			<table class="table table-hover" style="font-family:Verdana;">
+				<tr><td>Score</td></tr>
+				<tr><td>{$tinfo.SCORE}</td></tr>
+				<tr><td>Comments</td></tr>
+				<tr><td>{$tinfo.COMMENT}</td></tr>
+				<tr><td style="text-align:right;"><a href="__APP__/Transaction" class="btn" >Back</a></td></tr>
+			</table>
+		</if>  	
 	</div>
  </body>
 </html>
