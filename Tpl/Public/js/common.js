@@ -62,7 +62,7 @@ function postLogin() {
 			else {
 				$('#infoLogin').text(json.info).removeClass('alert-error').addClass('alert-success').slideDown();
 				setTimeout(function() {
-					location.href = ROOT + '/User/';
+					location.href = json.data;
 				}, 1500);
 			}
 		}, 'json');
@@ -91,7 +91,7 @@ function postRegister() {
 				else {
 					$('#infoRegister').text(json.info).removeClass('alert-error').addClass('alert-success').slideDown();
 					setTimeout(function() {
-						location.reload();
+						location.href = ROOT + "/User/"
 					}, 1500);
 				}
 			}, 'json');

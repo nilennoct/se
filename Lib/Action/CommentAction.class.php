@@ -1,5 +1,9 @@
 <?php
-class CommentAction extends Action{
+class CommentAction extends PrivilegeAction {
+    public function _initialize() {
+        parent::_initialize();
+    }
+
 	public function viewComments(){
         $this->assign('TITLE', 'View comments');
         $tid = $_REQUEST['TID'];
@@ -31,8 +35,8 @@ class CommentAction extends Action{
         $comment = $_POST['comment'];
         $tid = $_POST['tid'];
         $Transaction = D('Transaction');
-        if($score && $comment){  
-            $Transaction->setComment($tid, $score, $comment);                  
+        if($score && $comment){
+            $Transaction->setComment($tid, $score, $comment);
             if ($_POST['roomorseat']==0){
                 $Hotel = D('Hotel');
                 $hid = $_POST['hid'];

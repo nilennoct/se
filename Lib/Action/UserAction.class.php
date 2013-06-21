@@ -1,15 +1,7 @@
 <?php
-class UserAction extends Action {
+class UserAction extends PrivilegeAction {
 	public function _initialize() {
-		if ( ! session('uid') && ACTION_NAME != 'login' && ACTION_NAME != 'register') {
-			if (IS_POST) {
-				$this->ajaxReturn('','Session out of date, login again.',0);
-				exit();
-			}
-			else {
-				redirect(U('/'));
-			}
-		}
+		parent::_initialize();
 	}
 
 	public function index() {
@@ -76,7 +68,14 @@ class UserAction extends Action {
 					session('uid',$user[UID]);
 					session('username',$user[USERNAME]);
 					session('avatar',"http://www.gravatar.com/avatar/" . md5(strtolower(trim($user[EMAIL]))));
-					$this->ajaxReturn('','Login success',1);
+					session('uinfo', array('role' => $user[ROLE], 'seller' => $user[ISSELLER]));
+
+					$url = U('/User/');
+					if ($user[ISSELLER] == 1) {
+						$url = U('/Seller/');
+					}
+
+					$this->ajaxReturn($url,'Login success',1);
 				}
 			}
 			else {
@@ -101,6 +100,7 @@ class UserAction extends Action {
 					session('uid',$uid);
 					session('username',$user[USERNAME]);
 					session('avatar',"http://www.gravatar.com/avatar/" . md5(strtolower(trim($user[EMAIL]))));
+					session('uinfo', array('role' => 0, 'seller' => 0));
 					$this->ajaxReturn($uid, 'Register success', 1);
 				}
 				else {
@@ -181,7 +181,9 @@ class UserAction extends Action {
 			$user = $User->find(session('uid'));
 			if ($user[ISREALNAME] == 0) {
 				if ($Realname->verifyRealname($rid, $rname)) {
+					$user[ISSELLER] = 1;
 					$User->where('UID = ' . session('uid'))->setField(array('RID' => $rid, 'ISREALNAME' => 1, 'ISSELLER' => 1));
+					updateSession($user);
 					$this->ajaxReturn('','Verify success',1);
 				}
 				else {

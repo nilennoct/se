@@ -23,10 +23,14 @@
 					<ul class="nav">
 						<li class="divider-vertical"></li>
 						<li><a href="__APP__/"><i class="icon-home"></i> Home</a></li>
+						<li><a href="__APP__/Search/"><i class="icon-search"></i> Search</a></li>
+					<if condition="isset($_SESSION[uid])">
 						<li><a href="__APP__/User/"><i class="icon-user"></i> User</a></li>
 						<li><a href="__APP__/Transaction/"><i class="icon-shopping-cart"></i> Transaction</a></li>
-						<li><a href="__APP__/Search/"><i class="icon-search"></i> Search</a></li>
+						<if condition="$_SESSION[uinfo][seller] eq 1">
 						<li><a href="__APP__/Seller/"><i class="icon-th-large"></i> Seller</a></li>
+						</if>
+					</if>
 						<!-- Add your module here, wrapped with <li><a href=""></a></li> -->
 					</ul>
 

@@ -1,5 +1,9 @@
 <?php
-class SellerAction extends Action{
+class SellerAction extends PrivilegeAction {
+    public function _initialize() {
+        parent::_initialize();
+    }
+
     public function index(){
         $this->assign('TITLE','Seller Operations');
         $User = D('User');
@@ -208,5 +212,5 @@ class SellerAction extends Action{
         else{
             $this->error('Operation Failed!','__URL__/editSeat');
         }
-    }    
+    }
 }

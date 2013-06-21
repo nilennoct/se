@@ -1,18 +1,10 @@
 ﻿<?php
 
-class TransactionAction extends Action {
+class TransactionAction extends PrivilegeAction {
 	public function _initialize() {
-		if ( ! session('uid') && ACTION_NAME != 'login' && ACTION_NAME != 'register') {
-			if (IS_POST) {
-				$this->ajaxReturn('','Session out of date, login again.',0);
-				exit();
-			}
-			else {
-				redirect(U('/'));
-			}
-		}
+		parent::_initialize();
 	}
-	
+
 	public function index($seller=0){
         $Data_t = D('Transaction'); // 实例化Data数据模型
 		$Data_s = D('Seat');
@@ -37,7 +29,7 @@ class TransactionAction extends Action {
 				if($i<$statusnum-1)
 					$map=$map.' OR ';
 			}
-			
+
 			if($starttime&&$endtime)
 				$map2['TIMESTAMP'] = array('between',array(strtotime($starttime),strtotime($endtime)));
 			elseif($starttime)
@@ -112,7 +104,7 @@ class TransactionAction extends Action {
 		$this->bsswitch=!$seller;
         $this->display();
     }
-	
+
 	public function complaint_result($TID=0){
 		$this->TITLE='Complaint_result Page';
 		$Data_t = D('Transaction'); // 实例化Data数据模型
@@ -140,7 +132,7 @@ class TransactionAction extends Action {
 		}
 		$this->display();
 	}
-	
+
 	public function order($TID=0){
 		$this->TITLE='Order Page';
 		$Data_t = D('Transaction'); // 实例化Data数据模型
@@ -205,7 +197,7 @@ class TransactionAction extends Action {
 		$this->order_state = $State;
 		$this->display();
 	}
-	
+
 	public function complaint($TID=1){
 		$this->TITLE='Complaint Page';
 		$Data_c = D('Complaint'); // 实例化Data数据模型
@@ -233,7 +225,7 @@ class TransactionAction extends Action {
 			$this->display();
 		}
 	}
-	
+
 	public function createorder(){
 		C('TOKEN_ON',false);
 		if($_REQUEST){
@@ -253,17 +245,22 @@ class TransactionAction extends Action {
 			}
 		}
 	}
-	
+
 	public function payment(){
 		if($_POST)
 		{
 			$tid=$_POST['TID'];
 			$Data_t=D('Transaction');
-			$Data_p=D('Product');
+			$transaction = $Data_t->find($tid);
+			// dump($transaction);
+			$Data_p=D($transaction[ROOMORSEAT] == 0 ? 'Room' : 'Seat');
 			$Data_u=D('User');
 			$pid=$Data_t->where('TID = '.$tid)->getfield('PID');
 			$price=$Data_p->where('PID = '.$pid)->getfield('PRICE');
 			$mymoney=$Data_u->where('UID = '.session('uid'))->getfield('BALANCE');
+			// dump($price);
+			// dump($mymoney);
+			// exit();
 			if($price>$mymoney)
 				$this->ajaxReturn('','your money is not enough',0);
 			else
@@ -276,7 +273,7 @@ class TransactionAction extends Action {
 			}
 		}
 	}
-	
+
 	public function changestate(){
 		if($_POST)
 		{
