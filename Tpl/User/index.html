@@ -16,7 +16,12 @@
 								<tbody>
 									<tr>
 										<th>Username</th>
-										<td>{$user.USERNAME}</td>
+										<td>
+											{$user.USERNAME}
+											<eq name="user.ROLE" value="1">
+											<span class="label label-warning">VIP</span>
+											</eq>
+										</td>
 									</tr>
 									<tr>
 										<th>Email</th>

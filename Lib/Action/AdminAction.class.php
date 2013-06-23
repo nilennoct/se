@@ -10,7 +10,7 @@ class AdminAction extends PrivilegeAction {
 		$condition[AID] = session('aid');
 		$admin = $Admin->where($condition)->find();
 
-		C('TOKEN_ON',false);
+		// C('TOKEN_ON',false);
 		$this->assign('admin',$admin);
 		$this->assign('TITLE','Admin Center');
 		$this->display();
@@ -77,7 +77,15 @@ class AdminAction extends PrivilegeAction {
 
 	//增加一个用户的后台
 	public function do_add_user() {
-		$this->error('需要接口');
+		$User = D('User');
+		if ($User->create()) {
+			$User->add();
+			$this->success('增加用户成功！');
+		}
+		else {
+			echo $User->getError();exit();
+			$this->error('增加用户失败！（' . $User->getError() . '）');
+		}
 	}
 
 

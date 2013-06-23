@@ -3,7 +3,9 @@ class UserModel extends Model {
 	protected $_map = array(
 		'name' => 'USERNAME',
 		'pwd' => 'PASSWORD',
-		'email' => 'EMAIL'
+		'email' => 'EMAIL',
+		'role' => 'ROLE',
+		'isseller' => 'ISSELLER'
 	);
 	protected $_validate = array(
 		array('USERNAME','require','Username is necessary',1),

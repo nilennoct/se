@@ -5,7 +5,12 @@ class PrivilegeAction extends Action {
 		switch (MODULE_NAME) {
 			case 'Admin':
 				if ( ! session('aid') && ACTION_NAME != 'login' && ACTION_NAME != 'do_login') {
-					$this->error('Session out of date, login again.', U('/Admin/login'));
+					if (ACTION_NAME == '' || ACTION_NAME == 'index') {
+						redirect(U('/Admin/login'));
+					}
+					else {
+						$this->error('No privilege.', U('/Admin/login'));
+					}
 				}
 				break;
 			case 'Transaction':

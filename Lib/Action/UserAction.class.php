@@ -61,6 +61,9 @@ class UserAction extends PrivilegeAction {
 				if (!$user) {
 					$this->ajaxReturn('','User not found',0);
 				}
+				else if ($user[ROLE] == 4) {
+					$this->ajaxReturn('','You are blocked',0);
+				}
 				else if (md5($pwd) != $user[PASSWORD]) {
 					$this->ajaxReturn('','Password incorrect',0);
 				}
