@@ -1,0 +1,37 @@
+<div class="row">
+	<div id="nav-left" class="span3">
+		<ul class="nav nav-tabs nav-stacked">
+			<li><a href="__URL__/index">Admin Center</a></li>
+			<li class="active"><a href="javascript:void(0);">Manage Admins</a></li>
+			<li><a href="__URL__/list_user">Manage Users</a></li>
+			<li><a href="__URL__/list_black">Manage Black-list</a></li>
+			<li><a href="__URL__/list_realname">Real-name Verification</a></li>
+			<li><a href="__URL__/list_complaint">Complaint Arbitration</a></li>
+		</ul>
+	</div>
+	<div class="span6">
+		<div class="well">
+			<div class="row">
+				<div class="span5">
+					<table id="admininfo-table" class="table table-bordered">
+						<tr>
+						  <th>AID</th>
+						  <th>Admin name</th>
+						  <th>Email</th>
+						</tr>
+						<volist name="data" id="vo">
+							<tr>
+								<td>{$vo.AID}</td>
+								<td>{$vo.ADMINNAME}</td>
+								<td>{$vo.EMAIL}</td>
+							</tr>
+						</volist>
+					</table>
+					<button onclick="window.location.href='__APP__/Admin/add_admin'" class="btn btn-info btn-block">Add new admin</button>
+					<!--<button onclick="showChangePwdModal();" class="btn btn-info btn-block">Change Password</button>-->
+					<hr />
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

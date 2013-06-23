@@ -30,18 +30,24 @@
 						<if condition="$_SESSION[uinfo][seller] eq 1">
 						<li><a href="__APP__/Seller/"><i class="icon-th-large"></i> Seller</a></li>
 						</if>
+					<else />
+						<li><a href="__APP__/Admin/login"><i class="icon-star"></i> Admin</a></li>
 					</if>
 						<!-- Add your module here, wrapped with <li><a href=""></a></li> -->
 					</ul>
 
 					<ul id="userPanel" class="nav pull-right">
-					<if condition="!isset($_SESSION[uid])">
-						<li><a href="javascript:showRegisterModal();">Register</a></li>
-						<li><a href="javascript:showLoginModal();">Login</a></li>
-					<else />
+					<if condition="isset($_SESSION[aid])">
+						<li><a href="__APP__/Admin/logout"><i class="icon-off"></i> Logout</a></li>
+						<li class="divider-vertical"></li>
+						<li><a href="__APP__/User/"><img id="avatar" src="{$_SESSION[avatar]}?s=20" alt="{$_SESSION[username]}" width="40" height="40" />{$_SESSION[adminname]}</a></li>
+					<elseif condition="isset($_SESSION[uid])" />
 						<li><a href="__APP__/User/logout"><i class="icon-off"></i> Logout</a></li>
 						<li class="divider-vertical"></li>
 						<li><a href="__APP__/User/"><img id="avatar" src="{$_SESSION[avatar]}?s=20" alt="{$_SESSION[username]}" width="40" height="40" />{$_SESSION[username]}</a></li>
+					<else />
+						<li><a href="javascript:showRegisterModal();">Register</a></li>
+						<li><a href="javascript:showLoginModal();">Login</a></li>
 					</if>
 					</ul>
 				</div>

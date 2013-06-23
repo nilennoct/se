@@ -1,0 +1,48 @@
+<div class="row">
+	<div id="nav-left" class="span3">
+		<ul class="nav nav-tabs nav-stacked">
+			<li><a href="__URL__/index">Admin Center</a></li>
+			<li class="active"><a href="__URL__/list_admin">Manage Admins</a></li>
+			<li><a href="__URL__/list_user">Manage Users</a></li>
+			<li><a href="__URL__/list_black">Manage Black-list</a></li>
+			<li><a href="__URL__/list_realname">Real-name Verification</a></li>
+			<li><a href="__URL__/list_complaint">Complaint Arbitration</a></li>
+		</ul>
+	</div>
+	<div class="span6">
+		<div class="well">
+			<div class="row">
+				<div class="span5">
+					<FORM method="post" action="__URL__/do_add_admin">
+						<table id="admininfo-table" class="table table-bordered">
+							<tr>
+								<th>Admin name</th>
+								<td>
+									<INPUT type="text" name="adminname" placeholder="Adminname(4-20)" required >
+								</td>
+							</tr>
+							<tr>
+								<th>Password</th>
+								<td>
+									<INPUT type="password" name="password" placeholder="Password" autocomplete="off" required />
+								</td>
+							</tr>
+							<tr>
+								<th>Email</th>
+								<td>
+									<INPUT type="email" name="email" placeholder="Email" required />
+								</td>
+							</tr>
+							<tr>
+								<th> </th>
+								<td><INPUT type="submit" value="Confirm"></td>
+							</tr>
+						</table>
+					</FORM>
+					<!--<button onclick="showChangePwdModal();" class="btn btn-info btn-block">Change Password</button>-->
+					<hr />
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

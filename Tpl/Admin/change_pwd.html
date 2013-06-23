@@ -1,0 +1,50 @@
+<div class="row">
+	<div id="nav-left" class="span3">
+		<ul class="nav nav-tabs nav-stacked">
+			<li class="active"><a href="__URL__/index">Admin Center</a></li>
+			<li><a href="__URL__/list_admin">Manage Admins</a></li>
+			<li><a href="__URL__/list_user">Manage Users</a></li>
+			<li><a href="__URL__/list_black">Manage Black-list</a></li>
+			<li><a href="__URL__/list_realname">Real-name Verification</a></li>
+			<li><a href="__URL__/list_complaint">Complaint Arbitration</a></li>
+		</ul>
+	</div>
+	<div class="span9">
+		<div class="row">
+			<div class="span6">
+				<div class="well">
+					<div class="row">
+						<div class="span5">
+							<FORM method="post" action="__URL__/do_change_pwd">
+								<table id="admininfo-table" class="table table-bordered">
+									<tr>
+										<th>Admin name</th>
+										<td>{$_SESSION['adminname']}</td>
+									</tr>
+									<tr>
+										<th>old Password</th>
+										<td>
+											<INPUT class="pwd-visible" type="password" name="opwd" placeholder="old Password" autocomplete="off" required />
+										</td>
+									</tr>
+									<tr>
+										<th>new Password</th>
+										<td>
+											<INPUT class="pwd-visible" type="password" name="npwd" placeholder="new Password" autocomplete="off" required />
+										</td>
+									</tr>
+									<tr>
+										<th> </th>
+										<td><INPUT type="submit" value="Confirm"></td>
+									</tr>
+								</table>
+							</FORM>
+							<!--<button onclick="showChangePwdModal();" class="btn btn-info btn-block">Change Password</button>-->
+							<hr />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

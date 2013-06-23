@@ -2,6 +2,11 @@
 class PrivilegeAction extends Action {
 	public function _initialize() {
 		switch (MODULE_NAME) {
+			case 'Admin':
+				if ( ! session('aid') && ACTION_NAME != 'login' && ACTION_NAME != 'do_login') {
+					$this->error('Session out of date, login again.', U('/Admin/login'));
+				}
+				break;
 			case 'Transaction':
 			case 'Comment':
 			case 'User':
@@ -11,7 +16,7 @@ class PrivilegeAction extends Action {
 						exit();
 					}
 					else {
-						redirect(U('/'));
+						$this->error('Session out of date, login again.', U('/'));
 					}
 				}
 				break;
