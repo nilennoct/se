@@ -1,6 +1,7 @@
 <?php
 class PrivilegeAction extends Action {
 	public function _initialize() {
+		$uinfo = session('uinfo');
 		switch (MODULE_NAME) {
 			case 'Admin':
 				if ( ! session('aid') && ACTION_NAME != 'login' && ACTION_NAME != 'do_login') {
@@ -19,15 +20,20 @@ class PrivilegeAction extends Action {
 						$this->error('Session out of date, login again.', U('/'));
 					}
 				}
+				elseif ($uinfo[role] == 8 && ACTION_NAME != 'logout' && ACTION_NAME != 'changePwd') {
+					redirect(U('/Auditor/'));
+				}
 				break;
 
 			case 'Seller':
-				$uinfo = session('uinfo');
 				if ($uinfo[seller] != 1) {
 					$this->error('Sorry, you are not a qualified seller!',U('/User/'));
 				}
 				break;
-
+			case 'Auditor':
+				if ($uinfo[role] != 8) {
+					$this->error('Sorry, you are not an auditor!',U('/'));
+				}
 			default:
 				# code...
 				break;

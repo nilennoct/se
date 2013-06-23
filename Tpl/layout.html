@@ -25,10 +25,15 @@
 						<li><a href="__APP__/"><i class="icon-home"></i> Home</a></li>
 						<li><a href="__APP__/Search/"><i class="icon-search"></i> Search</a></li>
 					<if condition="isset($_SESSION[uid])">
+						<if condition="$_SESSION[uinfo][role] eq 8">
+						<li><a href="__APP__/Auditor/"><i class="icon-th-large"></i> Auditor</a></li>
+						<elseif condition="$_SESSION[uinfo][seller] eq 1" />
 						<li><a href="__APP__/User/"><i class="icon-user"></i> User</a></li>
 						<li><a href="__APP__/Transaction/"><i class="icon-shopping-cart"></i> Transaction</a></li>
-						<if condition="$_SESSION[uinfo][seller] eq 1">
 						<li><a href="__APP__/Seller/"><i class="icon-th-large"></i> Seller</a></li>
+						<else />
+						<li><a href="__APP__/User/"><i class="icon-user"></i> User</a></li>
+						<li><a href="__APP__/Transaction/"><i class="icon-shopping-cart"></i> Transaction</a></li>
 						</if>
 					<else />
 						<li><a href="__APP__/Admin/login"><i class="icon-star"></i> Admin</a></li>
@@ -44,7 +49,11 @@
 					<elseif condition="isset($_SESSION[uid])" />
 						<li><a href="__APP__/User/logout"><i class="icon-off"></i> Logout</a></li>
 						<li class="divider-vertical"></li>
+						<if condition="$_SESSION[uinfo][role] eq 8">
+						<li><a href="__APP__/Auditor/"><img id="avatar" src="{$_SESSION[avatar]}?s=20" alt="{$_SESSION[username]}" width="40" height="40" />{$_SESSION[username]}</a></li>
+						<else />
 						<li><a href="__APP__/User/"><img id="avatar" src="{$_SESSION[avatar]}?s=20" alt="{$_SESSION[username]}" width="40" height="40" />{$_SESSION[username]}</a></li>
+						</if>
 					<else />
 						<li><a href="javascript:showRegisterModal();">Register</a></li>
 						<li><a href="javascript:showLoginModal();">Login</a></li>

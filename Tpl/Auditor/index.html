@@ -1,0 +1,66 @@
+<div class="row">
+	<div id="nav-left" class="span3">
+		<ul class="nav nav-tabs nav-stacked">
+			<li class="active"><a href="javascript:void(0);">Auditor Center</a></li>
+			<li><a href="__APP__/Auditor/unchecked">Unchecked Transaction Record</a></li>
+			<li><a href="__APP__/Auditor/checked">Checked Transaction Record</a></li>
+			<li><a href="__APP__/Auditor/log">Operation log</a></li>
+		</ul>
+	</div>
+	<div class="span9">
+		<div class="row">
+			<div class="span6">
+				<div class="well">
+					<div class="row">
+						<img src="{$_SESSION[avatar]}?s=80" alt="" class="span1 img-polaroid" width="80" height="80" />
+						<div class="span4">
+							<table id="userinfo-table" class="table table-bordered">
+								<tbody>
+									<tr>
+										<th>Username</th>
+										<td>{$user.USERNAME}</td>
+									</tr>
+									<tr>
+										<th>Email</th>
+										<td>{$user.EMAIL}</td>
+									</tr>
+								</tbody>
+							</table>
+							<a href="javascript:showChangePwdModal();" class="btn btn-info btn-block">Change Password</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="changePwdModal" class="modal small hide in">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3>Change Password</h3>
+	</div>
+	<div class="modal-body">
+		<form class="form">
+			<div class="control-group">
+				<label class="control-label" for="oldPwd">Old Password</label>
+				<div class="controls">
+					<input type="password" name="oldPwd" id="oldPwd" placeholder="Old Password" required />
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="newPwd">New Password</label>
+				<div class="controls input-append">
+					<input class="pwd-visible" type="password" name="pwd" id="newPwd" placeholder="New Password" autocomplete="off" required />
+					<span id="togglePwVisibility" onclick="javascript:togglePwVisibility();" class="add-on"><i class="icon-eye-close"></i></span>
+				</div>
+			</div>
+		</form>
+
+		<div id="infoChangePwd" class="alert hide"></div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+		<button class="btn btn-primary" onclick="postChangePwd();">Change</button>
+	</div>
+</div>

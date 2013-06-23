@@ -71,7 +71,10 @@ class UserAction extends PrivilegeAction {
 					session('uinfo', array('role' => $user[ROLE], 'seller' => $user[ISSELLER]));
 
 					$url = U('/User/');
-					if ($user[ISSELLER] == 1) {
+					if ($user[ROLE] == 8) {
+						$url = U('/Auditor/');
+					}
+					elseif ($user[ISSELLER] == 1) {
 						$url = U('/Seller/');
 					}
 
