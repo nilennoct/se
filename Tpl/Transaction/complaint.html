@@ -2,7 +2,6 @@
 	<div id="nav-left" class="span3">
 		<ul class="nav nav-tabs nav-stacked">
 			<li><a href="__APP__/User">User Center</a></li>   <!--跳转至用户中心-->
-			<!--<li class="active">这里的active使该条目呈白色，以说明在当前选项页面中<a href="javascript:void(0);">Transaction Record</a></li> -->
 			<li><a href="__APP__/Transaction">Transaction Record</a></li>
 		</ul>
 	</div>
@@ -24,7 +23,7 @@
 			<div class="control-group">
 				<label class="control-label" for="inputReason">Reason</label>
 				<div class="controls">
-					<textarea style="width:80%; height:350px" id="inputReason" name="REASON" placeholder="小于200个字符"></textarea>
+					<textarea style="width:80%; height:350px" id="inputReason" name="REASON" placeholder="The reason you want to say"></textarea>
 				</div>
 			</div>
 			<p style="text-align:center;"> <!--按钮居中-->
@@ -39,12 +38,12 @@
 		var reason = $('#inputReason').val();
 		if( reason=="")
 		{
-			alert('投诉内容不能为空');
+			alert('The reason to complaint can not be empty');
 			return false;
 		}
 		else if(!reason.match(/^.{0,200}$/))
 		{
-			alert('输入的理由格式有误');
+			alert('The reason must be less than 200 characters');
 			return false;
 		}
 		else

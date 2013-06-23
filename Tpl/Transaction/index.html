@@ -88,13 +88,13 @@
 			if(starttime!="")
 				if(arr1[0]<=1970||arr1[1]>12||arr1[2]>31)
 				{
-					alert('输入的日期格式有误');
+					alert('Wrong format');
 					return false;
 				}
 			if(endtime!="")
 				if(arr2[0]<=1970||arr2[1]>12||arr2[2]>31)
 				{
-					alert('输入的日期格式有误');
+					alert('Wrong format');
 					return false;
 				}
 			if(starttime!=""&&endtime!="")
@@ -103,7 +103,7 @@
 				var tDate2 = new Date(arr2[0],arr2[1],arr2[2]);
 				if(tDate1>=tDate2)
 				{
-					alert('开始日期必须大于结束日期');
+					alert('Start time must be greater then endtime');
 					return false;
 				}
 			}
@@ -111,7 +111,7 @@
 		}
 		else
 		{
-			alert('输入的日期格式有误');
+			alert('Wrong format');
 			return false;
 		}
 	}

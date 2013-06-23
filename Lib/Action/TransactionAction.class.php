@@ -279,7 +279,7 @@ class TransactionAction extends PrivilegeAction {
 		{
 			$tid=$_POST['TID'];
 			$Data_t=D('Transaction');
-			$Data_p=D('Product');
+			$Data_p=D($transaction[ROOMORSEAT] == 0 ? 'Room' : 'Seat');
 			$Data_u=D('User');
 			$transaction = $Data_t->where('TID = '.$tid)->find();
 			$state = $transaction['STATUS'];
